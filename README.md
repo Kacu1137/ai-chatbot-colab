@@ -1,5 +1,3 @@
-# ai-chatbot-colab
-Build your own AI chatbot from scratch using Google Colab, TensorFlow, and a simple interactive interface.
 # Deep Learning Chatbot in Google Colab
 
 Build a deep learning-based AI chatbot from scratch using Google Colab, TensorFlow, and an interactive interface.
@@ -84,7 +82,7 @@ This project provides a reproducible deep learning framework for intent-based ch
 ```text
 ai-chatbot-colab/
 │
-├── notebook.ipynb        # Colab notebook with step-by-step implementation
+├── Simple_Chatbot.ipynb        # Colab notebook with step-by-step implementation
 ├── data.json             # Training dataset of intents and responses
 ├── README.md             # Documentation
 └── .gitignore            # Ignore unnecessary files and large artifacts
