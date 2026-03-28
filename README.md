@@ -33,8 +33,6 @@ Conversational agents are increasingly employed for automated communication acro
 - **Training summary:** Use `model.summary()` in notebook to visualize the architecture and layer parameters.  
 - The architecture is modular, allowing **dataset expansion** or **hyperparameter tuning**.  
 
-> Optional: Include a diagram of the model architecture (can use a simple flowchart image).
-
 ### 2.3 Interactive Interface
 
 - An **HTML/CSS/JavaScript interface** is embedded in the Colab notebook.  
@@ -90,3 +88,8 @@ ai-chatbot-colab/
 ├── data.json             # Training dataset of intents and responses
 ├── README.md             # Documentation
 └── .gitignore            # Ignore unnecessary files and large artifacts
+```
+---
+
+## 7. Topics
+machine-learning deep-learning tensorflow python google-colab nlp intent-classification tutorial chatbot
