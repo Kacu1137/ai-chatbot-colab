@@ -89,7 +89,4 @@ ai-chatbot-colab/
 ├── README.md             # Documentation
 └── .gitignore            # Ignore unnecessary files and large artifacts
 ```
----
 
-## 7. Topics
-machine-learning deep-learning tensorflow python google-colab nlp intent-classification tutorial chatbot
