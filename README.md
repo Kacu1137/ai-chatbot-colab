@@ -1,6 +1,6 @@
-# Deep Learning Chatbot in Google Colab
+# Deep Learning-Based Intent Classification Chatbot in Google Colab
 
-Build a deep learning-based AI chatbot from scratch using Google Colab, TensorFlow, and an interactive interface.
+Build a deep learning chatbot from scratch using Google Colab, TensorFlow, and a simple interactive interface.
 
 ---
 
@@ -30,12 +30,15 @@ Conversational agents are increasingly employed for automated communication acro
 - **Input:** Tokenized sequences of user messages.  
 - **Hidden layers:** Fully connected dense layers with ReLU activation.  
 - **Output:** Softmax activation to classify intents.  
-- The architecture is modular, allowing for **dataset expansion** or adjustment of **hyperparameters**.
+- **Training summary:** Use `model.summary()` in notebook to visualize the architecture and layer parameters.  
+- The architecture is modular, allowing **dataset expansion** or **hyperparameter tuning**.  
+
+> Optional: Include a diagram of the model architecture (can use a simple flowchart image).
 
 ### 2.3 Interactive Interface
 
 - An **HTML/CSS/JavaScript interface** is embedded in the Colab notebook.  
-- Supports **real-time messaging**, **typing simulation**, and **visual effects** to enhance user interaction.  
+- Supports **real-time messaging**, **typing simulation**, and **visual effects** to enhance user interaction.
 
 ---
 
@@ -43,6 +46,7 @@ Conversational agents are increasingly employed for automated communication acro
 
 - The chatbot was trained on a curated intent dataset to evaluate its ability to classify user input accurately.  
 - Experiments include **user input simulation** and **real-time interaction** to assess qualitative performance.  
+- Optional metrics: training loss and validation loss plots.
 
 ---
 
