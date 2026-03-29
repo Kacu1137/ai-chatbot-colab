@@ -1,4 +1,4 @@
-# Deep Learning-Based Intent Classification Chatbot in Google Colab
+Demo Classification Chatbot in Google Colab
 
 Build a deep learning chatbot from scratch using Google Colab, TensorFlow, and a interactive neon matrix interface.
 
@@ -87,7 +87,7 @@ This project provides a reproducible deep learning framework for intent-based ch
 ai-chatbot-colab/
 │
 ├── Simple_Chatbot.ipynb   # Colab notebook with step-by-step implementation
-├── index.html             # Demo neon matrix  chatbot interface
+├── index.html             # Demo neon matrix chatbot interface
 ├── data.json              # Training dataset of intents and responses
 ├── README.md              # Documentation
 └── .gitignore             # Ignore unnecessary files and large artifacts
