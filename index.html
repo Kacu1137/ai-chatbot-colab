@@ -8,7 +8,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Chatbot Research Project</title>
 <meta name="google-site-verification" content="k-FEEWW6qOQkjpD4FJC0CYEQ6MumfivcP9I4L6SQyO4" />
-
 <style>
 body {
     margin: 0;
@@ -19,15 +18,20 @@ body {
     position: relative;
 }
 
-/* Matrix effect */
-#matrix {
+/* Falling letters and numbers */
+.falling-char {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
+    top: -20px;
+    font-weight: bold;
+    color: #ff7a00;
+    font-size: 16px;
+    z-index: 5;
+    animation: fall linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-20px); }
+    100% { transform: translateY(110vh); }
 }
 
 /* Container */
@@ -35,8 +39,6 @@ body {
     width: 80%;
     max-width: 800px;
     margin: 40px auto;
-    position: relative;
-    z-index: 5;
 }
 
 /* Header */
@@ -70,24 +72,21 @@ h1 {
     animation: slideIn 0.3s ease forwards;
 }
 
-/* User & Bot */
 .msg.user {
     background: #1f1f1f;
-    color: orange;
+    color: #ff7a00; /* user orange */
     align-self: flex-end;
 }
 
 .msg.bot {
     background: #1a1a1a;
-    color: #ff0000; /* أحمر غامق نيون */
+    color: #ff0000; /* bot dark red neon */
     align-self: flex-start;
-    text-shadow: 0 0 6px #ff0000, 0 0 10px #ff0000;
 }
 
 .msg.typing {
-    color: #00cc00; /* أخضر غامق نيون */
+    color: #00ff00; /* dark neon green */
     font-style: italic;
-    text-shadow: 0 0 6px #00cc00, 0 0 10px #00cc00;
 }
 
 /* Slide animation */
@@ -145,7 +144,6 @@ button:hover {
 </style>
 </head>
 <body>
-<canvas id="matrix"></canvas>
 
 <div class="container">
     <h1>AI Chatbot Demo</h1>
@@ -160,35 +158,77 @@ button:hover {
 </div>
 
 <script>
-// Matrix effect
-const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-const fontSize = 16;
-const columns = canvas.width / fontSize;
-const drops = Array(Math.floor(columns)).fill(1);
-function drawMatrix() {
-    ctx.fillStyle = 'rgba(11,11,11,0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#ff6600'; // برتقالي غامق نيون
-    ctx.font = fontSize + 'px monospace';
-    for (let i = 0; i < drops.length; i++) {
-        const text = letters[Math.floor(Math.random()*letters.length)];
-        ctx.fillText(text, i*fontSize, drops[i]*fontSize);
-        drops[i]++;
-        if(drops[i]*fontSize > canvas.height && Math.random() > 0.975) drops[i]=0;
-    }
+// ======= Falling characters =======
+function createFallingChar() {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const span = document.createElement('span');
+    span.textContent = chars[Math.floor(Math.random()*chars.length)];
+    span.className = 'falling-char';
+    span.style.left = Math.random() * window.innerWidth + 'px';
+    span.style.animationDuration = (2 + Math.random() * 3) + 's';
+    document.body.appendChild(span);
+    setTimeout(()=>span.remove(), 5000);
 }
-setInterval(drawMatrix, 50);
+setInterval(createFallingChar, 100);
 
-// Chat logic
+// ======= Bot data =======
+const botData = {
+  "data": [
+    {
+      "label": "greeting",
+      "patterns": ["Hi","Hey","Is anyone there?","Hello","Hay"],
+      "responses": ["Hello","Hi","Hi there","Hey"]
+    },
+    {
+      "label": "about",
+      "patterns": ["Who are you?","What are you?","Who you are?"],
+      "responses": ["I'm Zain, your bot assistant!","I'm Zain, an Artificial Intelligent bot!","I'm Zain, an Amit Artificial Intelligent bot"]
+    },
+    {
+      "label": "name",
+      "patterns": ["What is your name?","What should I call you?","What's your name?"],
+      "responses": ["You can call me Zain","I'm Zain!","Just call me as Zain"]
+    },
+    {
+      "label": "help",
+      "patterns": ["Could you help me?","Give me a hand please","Can you help?","What can you do for me?","I need a support","I need a help","Support me please"],
+      "responses": ["Tell me how can assist you","Tell me your problem to assist you","Yes Sure, How can I support you?"]
+    },
+    {
+      "label": "sad",
+      "patterns": ["I'm so sad","I'm sad","I feel sad","I feel so sad","I am sad","I'm alone","I have a lot of problems"],
+      "responses": ["It is better for you to pray","Get close to Allah","You can watch a movie","Go out with your friends","It will be okay"]
+    },
+    {
+      "label": "positive_sen",
+      "patterns": ["I am depressed","I need encouragement","I'm so frustrated","I'm so frustrated with myself because I lost confidence"],
+      "responses": ["I think you are great!","You are a genius!","You are awesome!"]
+    },
+    {
+      "label": "thanks",
+      "patterns": ["Thanks","Thank you","That's helpful","Thanks for the help"],
+      "responses": ["Happy to help!","Any time","You're welcome!","You're most welcome!"]
+    },
+    {
+      "label": "goodbye",
+      "patterns": ["Bye","See you later","Goodbye"],
+      "responses": ["See you later","Have a nice day","Bye! Come back again"]
+    }
+  ]
+};
+
+// ======= Chat logic =======
 const chatBox = document.getElementById("chat");
 const input = document.getElementById("userInput");
 const sendBtn = document.getElementById("sendBtn");
 
-// Add message
+const initialConversation = [
+    { user: "Who are you?", bot: "I'm Zain, your Artificial Intelligent Assistant bot." },
+    { user: "Ok Zain, I need some help", bot: "Yes, sure. How can I support you?" },
+    { user: "I'm feeling sad", bot: "Get close to Allah." },
+    { user: "Thanks dude, see you", bot: "You're welcome!" }
+];
+
 function addMessage(text, cls) {
     const div = document.createElement("div");
     div.className = `msg ${cls}`;
@@ -198,62 +238,57 @@ function addMessage(text, cls) {
     return div;
 }
 
-// Bot typing
-function botReply(text, delay=800) {
-    const typing = addMessage("typing...", "typing");
-    setTimeout(() => {
-        typing.remove();
-        addMessage(text, "bot");
-    }, delay);
-}
-
-// Load data.json
-let botData = [];
-fetch('https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/Don-Youssef/ai-chatbot-colab/main/data.json')
-.then(res => res.json())
-.then(data => botData = data.data)
-.catch(err => console.error("Failed to load data.json"));
-
-// Get response
-function getResponse(msg) {
-    msg = msg.toLowerCase();
-    for(const item of botData) {
-        for(const pattern of item.patterns) {
-            if(msg.includes(pattern.toLowerCase())) {
-                return item.responses[Math.floor(Math.random()*item.responses.length)];
+function botReplyFromData(inputText) {
+    inputText = inputText.toLowerCase();
+    for(const item of botData.data){
+        for(const pattern of item.patterns){
+            if(pattern.toLowerCase() === inputText){
+                const resp = item.responses[Math.floor(Math.random()*item.responses.length)];
+                return resp;
             }
         }
     }
     return "Sorry, I don't understand.";
 }
 
-// Initial fixed conversation
-async function playInitialConversation() {
-    const initialConv = [
-        {user: "Who are you?", bot: "I'm Zain, your Artificial Intelligent Assistant bot."},
-        {user: "Ok Zain, I need some help", bot: "Yes, sure. How can I support you?"},
-        {user: "I'm feeling sad", bot: "Get close to Allah."},
-        {user: "Thanks dude, see you", bot: "You're welcome!"}
-    ];
-
-    for(const msg of initialConv) {
-        addMessage(msg.user, "user");
-        await new Promise(r => setTimeout(r, 1000));
-        botReply(msg.bot, 1500);
-        await new Promise(r => setTimeout(r, 2000));
-    }
+function botReply(text, delay=800) {
+    const typing = addMessage("typing...", "typing");
+    setTimeout(()=>{
+        typing.remove();
+        addMessage(text, "bot");
+    }, delay);
 }
 
+// ======= Play initial conversation =======
+let convIndex = 0;
+function playInitialConversation() {
+    if(convIndex < initialConversation.length){
+        const msg = initialConversation[convIndex];
+        addMessage(msg.user, "user");
+        setTimeout(()=>botReply(msg.bot, 1000), 500);
+        convIndex++;
+        setTimeout(playInitialConversation, 2500);
+    }
+}
 setTimeout(playInitialConversation, 1000);
 
-// Send user input manually
+// ======= Manual user input =======
 sendBtn.addEventListener("click", () => {
-    if(input.value.trim() !== "") {
-        addMessage(input.value.trim(), "user");
-        botReply(getResponse(input.value.trim()), 1000);
+    const userText = input.value.trim();
+    if(userText!==""){
+        addMessage(userText, "user");
+        const reply = botReplyFromData(userText);
+        botReply(reply, 1000);
         input.value = "";
     }
 });
+
+input.addEventListener("keypress", (e)=>{
+    if(e.key === "Enter"){
+        sendBtn.click();
+    }
+});
 </script>
+
 </body>
 </html>
