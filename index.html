@@ -1,40 +1,306 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="description" content="Deep Learning AI Chatbot implemented in Google Colab with interactive interface">
-<meta name="keywords" content="AI, Chatbot, Google Colab, Deep Learning, NLP, Neural Network, Interactive Chat, Python, TensorFlow">
-<meta name="author" content="Don Youssef">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Chatbot Research Project</title>
+
+<!-- SEO -->
+<meta name="description" content="Deep Learning AI Chatbot implemented in Google Colab with an advanced interactive interface and experimental AI system simulation.">
+<meta name="keywords" content="AI, Chatbot, Deep Learning, NLP, TensorFlow, Artificial Intelligence, Interactive AI, Neural Network, Google Colab">
+<meta name="author" content="Don Youssef">
+
+<!-- Google Verification -->
 <meta name="google-site-verification" content="k-FEEWW6qOQkjpD4FJC0CYEQ6MumfivcP9I4L6SQyO4" />
+
+<title>AI System Interface | Research Demo</title>
+
 <style>
-body {
-    margin: 0;
-    font-family: "Segoe UI", Tahoma, sans-serif;
-    background: #0b0b0b;
-    color: #eaeaea;
-    overflow-x: hidden;
-    position: relative;
+
+/* GLOBAL */
+body{
+    margin:0;
+    font-family:monospace;
+    background:#020202;
+    color:#fff;
+    overflow:hidden;
 }
 
-/* Scanlines effect */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-    background-size: 100% 4px;
-    pointer-events: none;
-    z-index: 10;
+/* MATRIX BACKGROUND */
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
 }
 
-/* Container */
-.container {
-    width: 80%;
+/* BOOT SCREEN */
+#boot{
+    position:fixed;
+    width:100%; height:100%;
+    background:black;
+    color:#ff7a00;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    font-size:20px;
+    animation:fadeOut 3.5s forwards;
+}
+
+.boot-text{
+    opacity:0;
+    animation:show 2s forwards;
+}
+
+.boot-text:nth-child(1){animation-delay:.3s}
+.boot-text:nth-child(2){animation-delay:1s}
+.boot-text:nth-child(3){animation-delay:1.7s}
+
+@keyframes show{to{opacity:1}}
+@keyframes fadeOut{
+    0%,80%{opacity:1}
+    100%{opacity:0;visibility:hidden}
+}
+
+/* CONTAINER */
+.container{
+    width:80%;
+    max-width:800px;
+    margin:40px auto;
+}
+
+/* TITLE */
+h1{
+    text-align:center;
+    color:#ff7a00;
+    text-shadow:0 0 15px #ff7a00;
+}
+
+/* CHAT */
+.chat-box{
+    height:450px;
+    background:#0a0a0a;
+    padding:15px;
+    border-radius:10px;
+    overflow:auto;
+    box-shadow:0 0 30px #ff7a00;
+}
+
+/* MSG */
+.msg{
+    padding:10px;
+    margin:8px 0;
+    border-radius:10px;
+    max-width:70%;
+    animation:fade .3s;
+}
+
+.msg.user{
+    background:#111;
+    color:orange;
+    margin-left:auto;
+}
+
+.msg.bot{
+    background:#000;
+    color:red;
+}
+
+/* TYPING */
+.typing{
+    color:lime;
+}
+
+/* INPUT */
+.input-area{
+    display:flex;
+    margin-top:10px;
+}
+
+input{
+    flex:1;
+    padding:10px;
+    background:#111;
+    border:none;
+    color:orange;
+}
+
+button{
+    padding:10px;
+    border:2px solid #ff7a00;
+    color:#ff7a00;
+    background:transparent;
+    cursor:pointer;
+}
+
+/* GLITCH */
+.glitch{
+    animation:glitch .2s infinite;
+}
+
+@keyframes glitch{
+    0%{transform:translate(0,0)}
+    25%{transform:translate(2px,-2px)}
+    50%{transform:translate(-2px,2px)}
+}
+
+/* CURSOR GLOW */
+input:focus{
+    outline:none;
+    box-shadow:0 0 10px orange;
+}
+
+/* FADE */
+@keyframes fade{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- MATRIX -->
+<canvas id="matrix"></canvas>
+
+<!-- BOOT -->
+<div id="boot">
+    <div class="boot-text">Initializing system...</div>
+    <div class="boot-text">Loading AI core...</div>
+    <div class="boot-text">AI ONLINE ✔</div>
+</div>
+
+<!-- SOUND -->
+<audio id="beep" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+
+<div class="container">
+    <h1>AI System</h1>
+
+    <div id="chat" class="chat-box"></div>
+
+    <div class="input-area">
+        <input id="input" placeholder="Type..." />
+        <button onclick="send()">➤</button>
+    </div>
+</div>
+
+<script>
+
+/* MATRIX EFFECT */
+const canvas=document.getElementById("matrix");
+const ctx=canvas.getContext("2d");
+canvas.height=window.innerHeight;
+canvas.width=window.innerWidth;
+
+let letters="01";
+letters=letters.split("");
+
+let font=14;
+let columns=canvas.width/font;
+let drops=[];
+
+for(let i=0;i<columns;i++){drops[i]=1;}
+
+function draw(){
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle="#ff7a00";
+    ctx.font=font+"px monospace";
+
+    for(let i=0;i<drops.length;i++){
+        let text=letters[Math.floor(Math.random()*letters.length)];
+        ctx.fillText(text,i*font,drops[i]*font);
+
+        if(drops[i]*font>canvas.height && Math.random()>0.975)
+            drops[i]=0;
+
+        drops[i]++;
+    }
+}
+
+setInterval(draw,33);
+
+/* CHAT */
+const chat=document.getElementById("chat");
+const input=document.getElementById("input");
+
+function sound(){
+    document.getElementById("beep").play();
+}
+
+function add(text,cls){
+    let d=document.createElement("div");
+    d.className="msg "+cls;
+    d.innerText=text;
+    chat.appendChild(d);
+
+    chat.scrollTo({
+        top:chat.scrollHeight,
+        behavior:"smooth"
+    });
+
+    return d;
+}
+
+function bot(text){
+    let t=add("typing","bot typing");
+
+    let dots=0;
+    let anim=setInterval(()=>{
+        dots=(dots+1)%4;
+        t.innerText="typing"+".".repeat(dots);
+    },300);
+
+    setTimeout(()=>{
+        clearInterval(anim);
+        t.remove();
+
+        let m=add(text,"bot glitch");
+        setTimeout(()=>m.classList.remove("glitch"),300);
+
+    },800+Math.random()*1200);
+}
+
+/* AUTO START */
+setTimeout(()=>{
+    bot("System initialized.");
+},3500);
+
+/* SEND */
+function send(){
+    let text=input.value.trim().toLowerCase();
+    if(!text) return;
+
+    add(text,"user");
+    sound();
+
+    let reply;
+
+    if(text.includes("sad")){
+        reply="Stay strong. You will overcome this.";
+    }
+    else if(text.includes("help")){
+        reply="Describe your problem.";
+    }
+    else if(text.includes("who")){
+        reply="I am an experimental AI system.";
+    }
+    else{
+        reply="Processing input...";
+    }
+
+    bot(reply);
+    input.value="";
+}
+
+</script>
+
+</body>
+</html>    width: 80%;
     max-width: 800px;
     margin: 40px auto;
 }
