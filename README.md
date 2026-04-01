@@ -1,6 +1,6 @@
-# Deep Learning-Based Intent Classification Chatbot in Google Colab
+# Deep Learning-Based Intent Classification Chatbot in Google Colab with Interactive Neon Matrix Interface
 
-Build a deep learning chatbot from scratch using Google Colab, TensorFlow, and a interactive neon matrix interface.
+Build a deep learning chatbot from scratch using Google Colab, TensorFlow, and a interactive neon matrix interface architecture.
 
 ---
 
@@ -33,10 +33,10 @@ Conversational agents are increasingly employed for automated communication acro
 - **Training summary:** Use `model.summary()` in notebook to visualize the architecture and layer parameters.  
 - The architecture is modular, allowing **dataset expansion** or **hyperparameter tuning**.  
 
-### 2.3 Interactive Neon Matrix Interface
+### 2.3 Interactive Neon Matrix Interface Architecture
 
 - An **HTML/CSS/JavaScript interface** is embedded in the Colab notebook.  
-- Supports **real-time messaging**, **typing simulation**, **neon matrix chatbot interface**, and **visual effects** to enhance user interaction.
+- Supports **real-time messaging**, **typing simulation**, **neon matrix effect**, **moving eye**, and **visual effects** to enhance user interaction.
 
 ---
 
@@ -69,9 +69,9 @@ The system demonstrates reliable intent recognition and coherent response genera
 **User:** Thanks dude, see you  
 **Bot:** You're welcome!
 
-See the neon matrix chatbot interface demo here: [AI Chatbot Demo](https://don-youssef.github.io/ai-chatbot-colab/)
+See the conversational chatbot simulation with neon matrix interface here: [Conversational AI Chatbot Simulation](https://don-youssef.github.io/ai-chatbot-colab/)
 
-The framework is designed to be **extendable**, allowing researchers to add new intents, retrain the model, and refine the conversational interface.
+The framework is designed to be **extendable**, allowing researchers to add new intents, retrain the model, and refine the conversational interface architecture.
 
 ---
 
@@ -87,9 +87,8 @@ This project provides a reproducible deep learning framework for intent-based ch
 ai-chatbot-colab/
 │
 ├── Simple_Chatbot.ipynb   # Colab notebook with step-by-step implementation
-├── index.html             # Neon matrix chatbot interface demo
+├── index.html             # Conversational chatbot simulation with neon matrix interface
 ├── data.json              # Training dataset of intents and responses
 ├── README.md              # Documentation
 └── .gitignore             # Ignore unnecessary files and large artifacts
 ```
-
